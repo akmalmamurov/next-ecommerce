@@ -13,8 +13,7 @@ import { Container } from "../container";
 import Image from "next/image";
 import logo from "@/images/logo.png";
 import CartIcon from "../CartIcon";
-import { BsBasket } from "react-icons/bs";
-import { FiUser } from "react-icons/fi";
+import { ShoppingBasket, User } from "lucide-react";
 
 export const Header = () => {
   const { user } = useUser();
@@ -47,7 +46,7 @@ export const Header = () => {
                   href={"/orders"}
                   className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect"
                 >
-                  <BsBasket className="text-2xl text-darkBlue" />
+                  <ShoppingBasket className="text-2xl text-darkBlue" />
                   <div className="flex flex-col">
                     <p className="text-xs">
                       <span className="font-semibold">
@@ -71,7 +70,7 @@ export const Header = () => {
               ) : (
                 <SignInButton mode="modal">
                   <div className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md cursor-pointer hover:shadow-none hoverEffect">
-                    <FiUser className="text-2xl text-darkBlue" />
+                    <User className="text-2xl text-darkBlue" />
                     <div className="flex flex-col">
                       <p className="text-xs">Account</p>
                       <p className="font-semibold">Login</p>
