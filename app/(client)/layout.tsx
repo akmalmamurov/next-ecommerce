@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local"
 import "../globals.css";
 import { Header } from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Footer } from "@/components/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const poppins = localFont({
+  src: "../fonts/Poppins.woff2",
+  variable: "--font-poppins",
+  weight: "400",
+  preload: false
 });
 
 export const metadata: Metadata = {
@@ -29,11 +26,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${poppins.variable} antialiased`}
         >
           <Header />
           {children}
-          <Footer/>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
