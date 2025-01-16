@@ -9,7 +9,7 @@ export default async function Home() {
   const categories = await getAllCategories();
 
   return (
-    <div className="">
+    <div >
       <Container>
         <DiscountBanner sales={sales} />
         <ProductList products={products} title={true} categories={categories} />

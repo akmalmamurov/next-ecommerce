@@ -17,7 +17,6 @@ import { ShoppingBasket, User } from "lucide-react";
 
 export const Header = () => {
   const { user } = useUser();
-  console.log("user", user);
 
   return (
     <div className="bg-white sticky top-0 z-50 border-b border-b-gray-200 py-1">

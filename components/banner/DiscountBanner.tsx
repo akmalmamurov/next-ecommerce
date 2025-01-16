@@ -36,7 +36,7 @@ const DiscountBanner = ({ sales }: { sales: SALE_QUERYResult }) => {
                       {sale?.description}
                     </p>
                     <p className="mb-2 md:mb-4">
-                      Use code: <span className="font-semibold uppercase text-primary">{sale?.couponCode}</span>
+                      Use code: <span className="font-semibold uppercase text-primary">{sale?.couponCode}</span>{" "}
                       for <span className="font-semibold">{sale?.discountAmount}%</span> OFF
                     </p>
                     <Button>

@@ -4,7 +4,7 @@ import "../globals.css";
 import { Header } from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Footer } from "@/components/footer";
-
+import {Toaster} from "react-hot-toast"
 const poppins = localFont({
   src: "../fonts/Poppins.woff2",
   variable: "--font-poppins",
@@ -31,6 +31,12 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <Toaster position="top-center" toastOptions={{
+            style:{
+              background: "#000000",
+              color: "#FFFFFF"
+            }
+          }}/>
         </body>
       </html>
     </ClerkProvider>

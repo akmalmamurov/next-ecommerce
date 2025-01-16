@@ -3,12 +3,14 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import Link from "next/link";
 import ProductBar from "../product-bar/ProductBar";
-import {LuStar} from "react-icons/lu"
+import { LuStar } from "react-icons/lu";
+import { PriceView } from "../price-view";
+import AddToCart from "../AddToCart";
 interface Props {
   product: Product;
 }
 const ProductCard = ({ product }: Props) => {
-  const imageUrl = product.image
+  const imageUrl = product?.image
     ? urlFor(product.image).url()
     : "/placeholder.png";
   const isStock = product?.stock !== 0;
@@ -49,12 +51,27 @@ const ProductCard = ({ product }: Props) => {
         <div className="flex items-center justify-between">
           <p className="text-gray-500 font-medium">Snacks</p>
           <div className="flex items-center text-gray-500 gap-1">
-            {Array.from({length:5}).map((_,index)=>{
-              const isLastStar = index === 4
-              return <LuStar fill={!isLastStar ? "#fca99b" : "transparent"} key={index}/>
+            {Array.from({ length: 5 }).map((_, index) => {
+              const isLastStar = index === 4;
+              return (
+                <LuStar
+                  fill={!isLastStar ? "#fca99b" : "transparent"}
+                  key={index}
+                  className={`${isLastStar ? "text-gray-500" : "text-lightOrange"}`}
+                />
+              );
             })}
           </div>
         </div>
+        <p className="text-base text-gray-600 tracking-wide font-semibold line-clamp-1 capitalize">
+          {product?.name}
+        </p>
+        <PriceView
+          price={product?.price}
+          discount={product?.discount}
+          label={product?.label}
+        />
+        <AddToCart product={product}/>
       </div>
     </div>
   );
