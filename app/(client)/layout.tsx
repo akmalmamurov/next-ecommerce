@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local"
+import localFont from "next/font/local";
 import "../globals.css";
 import { Header } from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -9,7 +9,7 @@ const poppins = localFont({
   src: "../fonts/Poppins.woff2",
   variable: "--font-poppins",
   weight: "400",
-  preload: false
+  preload: false,
 });
 
 export const metadata: Metadata = {

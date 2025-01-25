@@ -1,18 +1,22 @@
 import AddToCart from "@/components/AddToCart";
 import { Container } from "@/components/container";
 import { PriceView } from "@/components/price-view";
+import { PRODUCT_BY_SLUGResult } from "@/sanity.types";
 import { getProduct } from "@/sanity/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
+import { FaRegQuestionCircle } from "react-icons/fa";
+import { FiShare2 } from "react-icons/fi";
 import { LuStar } from "react-icons/lu";
-import  RxBorderSplit  from "lucide-react";
+import { RxBorderSplit } from "react-icons/rx";
+import { TbTruckDelivery } from "react-icons/tb";
 const SingleProductPage = async ({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const product = await getProduct(slug);
+  const product: PRODUCT_BY_SLUGResult = await getProduct(slug);
 
   return (
     <div>
@@ -70,6 +74,37 @@ const SingleProductPage = async ({
             <div className="flex items-center gap-2 text-sm text-black hover:text-red-500 hoverEffect">
               <RxBorderSplit className="text-lg" />
               <p>Compare color</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-black hover:text-red-500 hoverEffect">
+              <FaRegQuestionCircle className="text-lg" />
+              <p>Ask a question</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-black hover:text-red-500 hoverEffect">
+              <TbTruckDelivery className="text-lg" />
+              <p>Delivery & Return</p>
+            </div>
+
+            <div className="flex items-center gap-2 text-sm text-black hover:text-red-500 hoverEffect">
+              <FiShare2 className="text-lg" />
+              <p>Share</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-5">
+            <div className="border border-darkBlue/20 text-center p-3 hover:border-darkBlue hoverEffect rounded-md">
+              <p className="text-base font-semibold text-black">
+                Free Shipping
+              </p>
+              <p className="text-sm text-gray-500">
+                Free shipping over order $120
+              </p>
+            </div>
+            <div className="border border-darkBlue/20 text-center p-3 hover:border-darkBlue hoverEffect rounded-md">
+              <p className="text-base font-semibold text-black">
+                Flexible Payment
+              </p>
+              <p className="text-sm text-gray-500">
+                Fay with Multiple Credit Cards
+              </p>
             </div>
           </div>
         </div>
