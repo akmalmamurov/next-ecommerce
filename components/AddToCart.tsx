@@ -2,7 +2,6 @@
 import { Product } from "@/sanity.types";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import toast from "react-hot-toast";
 import QuantityButton from "./QuantityButton";
 import PriceFormatter from "./price-view/PriceFormatter";
 import { useEffect, useState } from "react";
@@ -28,7 +27,7 @@ const AddToCart = ({ product, className }: Props) => {
         <div className="text-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs text-muted-foreground">Quantity</span>
-            <QuantityButton product={product} />
+            <QuantityButton />
           </div>
           <div className="flex items-center justify-between border-t pt-1">
             <span>Subtotal</span>
