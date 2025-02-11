@@ -1,9 +1,9 @@
 "use client";
 import { Category } from "@/sanity.types";
-import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
+import React, { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Button } from "./button";
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
@@ -12,12 +12,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command";
+} from "./command";
 import { cn } from "@/lib/utils";
 
 interface Props {
   categories: Category[];
 }
+
 const CategorySelector = ({ categories }: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -34,39 +35,39 @@ const CategorySelector = ({ categories }: Props) => {
           {value
             ? categories.find((category) => category?._id === value)?.title
             : "Filter by Category"}
-          <ChevronsUpDown />
+          <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput
             placeholder="Search category..."
             className="h-9"
             onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  const selectedCategory = categories.find((c) =>
-                    c.title
-                      ?.toLowerCase()
-                      .includes(e.currentTarget.value.toLowerCase())
-                  );
-                  if (selectedCategory?.slug?.current) {
-                    setValue(selectedCategory?._id);
-                    router.push(`/categories/${selectedCategory.slug.current}`);
-                    setOpen(false);
-                  }
+              if (e.key === "Enter") {
+                const selectedCategory = categories.find((c) =>
+                  c.title
+                    ?.toLowerCase()
+                    .includes(e.currentTarget.value.toLowerCase())
+                );
+                if (selectedCategory?.slug?.current) {
+                  setValue(selectedCategory?._id);
+                  router.push(`/categories/${selectedCategory.slug.current}`);
+                  setOpen(false);
                 }
-              }}
+              }
+            }}
           />
           <CommandList>
-            <CommandEmpty>No Category found.</CommandEmpty>
+            <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {categories?.map((category) => (
+              {categories.map((category) => (
                 <CommandItem
                   key={category?._id}
                   value={category?.title}
                   onSelect={() => {
-                    setValue(value === category?._id ? category?._id : "");
-                    router.push(`/categories/${category?.slug?.current}`);
+                    setValue(value === category?._id ? "" : category?._id);
+                    router.push(`/categories/${category.slug?.current}`);
                     setOpen(false);
                   }}
                 >
