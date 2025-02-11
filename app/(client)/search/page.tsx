@@ -3,13 +3,8 @@ import { Container } from "@/components/container";
 import { ProductGrid } from "@/components/grid";
 import { searchProductByName } from "@/sanity/helpers";
 
-interface Props {
-  searchParams: {
-    query: string;
-  };
-}
-const SearchPage = async ({ searchParams }: Props) => {
-  const { query } =  searchParams;
+const SearchPage = async ({ searchParams }: { searchParams: Promise<{ query: string }>; }) => {
+  const { query } = await searchParams;
   const products = await searchProductByName(query);
 
   return (
