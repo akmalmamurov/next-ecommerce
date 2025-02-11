@@ -1,13 +1,12 @@
-import { PRODUCT_BY_SLUGResult } from "@/sanity.types";
 import { sanityFetch } from "../lib/live";
 import {
   CATEGORIES_QUERY,
   PRODUCT_BY_CATEGORY_QUERY,
-  PRODUCT_BY_SLUG,
   PRODUCT_QUERY,
   PRODUCT_SEARCH_QUERY,
   SALE_QUERY,
 } from "./queries";
+import { defineQuery } from "next-sanity";
 
 export const getSale = async () => {
   try {
@@ -45,20 +44,24 @@ export const getAllCategories = async () => {
   }
 };
 
-export const getProduct = async (slug: string): Promise<PRODUCT_BY_SLUGResult | null> => {
+export const getProduct = async (slug: string) => {
+  const PRODUCT_BY_ID_QUERY = defineQuery(
+    `*[_type == "product" && slug.current == $slug] | order(name asc) [0]`
+  );
+
   try {
     const product = await sanityFetch({
-      query: PRODUCT_BY_SLUG,
-      params: { slug },
+      query: PRODUCT_BY_ID_QUERY,
+      params: {
+        slug,
+      },
     });
-
-    return product?.data ?? null; 
+    return product?.data || null;
   } catch (error) {
-    console.error("Error fetching product:", error);
-    return null; 
+    console.error("Error fetching product by ID:", error);
+    return null;
   }
 };
-
 
 export const searchProductByName = async (searchParam: string) => {
   try {
@@ -76,7 +79,6 @@ export const searchProductByName = async (searchParam: string) => {
 };
 
 export const getProductsByCategory = async (categorySlug: string) => {
-
   try {
     const products = await sanityFetch({
       query: PRODUCT_BY_CATEGORY_QUERY,

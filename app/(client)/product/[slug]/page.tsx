@@ -13,9 +13,9 @@ import { TbTruckDelivery } from "react-icons/tb";
 const SingleProductPage = async ({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) => {
-  const { slug } = params;
+  const { slug } = await params;
   const product = await getProduct(slug);
 
   if (!product) {
