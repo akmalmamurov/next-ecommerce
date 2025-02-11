@@ -1,3 +1,4 @@
+import { PRODUCT_BY_SLUGResult } from "@/sanity.types";
 import { sanityFetch } from "../lib/live";
 import {
   CATEGORIES_QUERY,
@@ -44,20 +45,20 @@ export const getAllCategories = async () => {
   }
 };
 
-export const getProduct = async (slug: string) => {
+export const getProduct = async (slug: string): Promise<PRODUCT_BY_SLUGResult | null> => {
   try {
     const product = await sanityFetch({
       query: PRODUCT_BY_SLUG,
-      params: {
-        slug,
-      },
+      params: { slug },
     });
-    return product?.data || null;
+
+    return product?.data ?? null; 
   } catch (error) {
-    console.log(error);
-    return [];
+    console.error("Error fetching product:", error);
+    return null; 
   }
 };
+
 
 export const searchProductByName = async (searchParam: string) => {
   try {

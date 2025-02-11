@@ -1,7 +1,6 @@
 import AddToCart from "@/components/AddToCart";
 import { Container } from "@/components/container";
 import { PriceView } from "@/components/price-view";
-import { PRODUCT_BY_SLUGResult } from "@/sanity.types";
 import { getProduct } from "@/sanity/helpers";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
@@ -10,13 +9,18 @@ import { FiShare2 } from "react-icons/fi";
 import { LuStar } from "react-icons/lu";
 import { RxBorderSplit } from "react-icons/rx";
 import { TbTruckDelivery } from "react-icons/tb";
+
 const SingleProductPage = async ({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) => {
-  const { slug } = await params;
-  const product: PRODUCT_BY_SLUGResult = await getProduct(slug);
+  const { slug } = params;
+  const product = await getProduct(slug);
+
+  if (!product) {
+    return <div className="text-center text-xl font-bold text-red-500">Product not found</div>;
+  }
 
   return (
     <div>
@@ -83,7 +87,6 @@ const SingleProductPage = async ({
               <TbTruckDelivery className="text-lg" />
               <p>Delivery & Return</p>
             </div>
-
             <div className="flex items-center gap-2 text-sm text-black hover:text-red-500 hoverEffect">
               <FiShare2 className="text-lg" />
               <p>Share</p>
@@ -91,20 +94,12 @@ const SingleProductPage = async ({
           </div>
           <div className="flex flex-wrap items-center gap-5">
             <div className="border border-darkBlue/20 text-center p-3 hover:border-darkBlue hoverEffect rounded-md">
-              <p className="text-base font-semibold text-black">
-                Free Shipping
-              </p>
-              <p className="text-sm text-gray-500">
-                Free shipping over order $120
-              </p>
+              <p className="text-base font-semibold text-black">Free Shipping</p>
+              <p className="text-sm text-gray-500">Free shipping over order $120</p>
             </div>
             <div className="border border-darkBlue/20 text-center p-3 hover:border-darkBlue hoverEffect rounded-md">
-              <p className="text-base font-semibold text-black">
-                Flexible Payment
-              </p>
-              <p className="text-sm text-gray-500">
-                Fay with Multiple Credit Cards
-              </p>
+              <p className="text-base font-semibold text-black">Flexible Payment</p>
+              <p className="text-sm text-gray-500">Pay with Multiple Credit Cards</p>
             </div>
           </div>
         </div>
