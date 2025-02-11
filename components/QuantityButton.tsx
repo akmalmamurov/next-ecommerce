@@ -1,23 +1,44 @@
+import React from "react";
 import { Button } from "./ui/button";
 import { HiMinus, HiPlus } from "react-icons/hi2";
 import toast from "react-hot-toast";
-import { cn } from "@/lib/utils";
+import { Product } from "@/sanity.types";
+import { twMerge } from "tailwind-merge";
+import useCartStore from "@/context/store";
 
-const QuantityButton = () => {
+interface Props {
+  product: Product;
+  className?: string;
+  borderStyle?: string;
+}
+
+const QuantityButtons = ({ product, className, borderStyle }: Props) => {
+  const { addItem, removeItem, getItemCount } = useCartStore();
+  const itemCount = getItemCount(product?._id);
+  const isOutOfStock = product?.stock === 0;
+
   const handleRemoveProduct = () => {
-    toast.success("Product removed from cart");
+    removeItem(product?._id);
+    if (itemCount > 1) {
+      toast.success("Quantity Decreased successfully!");
+    } else {
+      toast.success(`${product?.name?.substring(0, 12)} removed successfully!`);
+    }
   };
-  const handleAddProduct = () => {
-    toast.success("Product added to cart");
-  };
-  const itemCount = 5;
   return (
-    <div className={cn("flex items-center gap-1 pb-1 text-balance")}>
+    <div
+      className={twMerge(
+        "flex items-center gap-1 pb-1 text-base",
+        borderStyle,
+        className
+      )}
+    >
       <Button
-        variant={"outline"}
-        size={"icon"}
+        variant="outline"
+        size="icon"
         className="w-6 h-6"
         onClick={handleRemoveProduct}
+        disabled={itemCount === 0 || isOutOfStock}
       >
         <HiMinus />
       </Button>
@@ -25,10 +46,14 @@ const QuantityButton = () => {
         {itemCount}
       </span>
       <Button
-        variant={"outline"}
-        size={"icon"}
+        variant="outline"
+        size="icon"
         className="w-6 h-6"
-        onClick={handleAddProduct}
+        onClick={() => {
+          addItem(product);
+          toast.success("Quantity increased successfully!");
+        }}
+        disabled={isOutOfStock}
       >
         <HiPlus />
       </Button>
@@ -36,4 +61,4 @@ const QuantityButton = () => {
   );
 };
 
-export default QuantityButton;
+export default QuantityButtons;
