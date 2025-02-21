@@ -1,15 +1,17 @@
 "use client";
+import useCartStore from "@/context/store";
 import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const CartIcon = () => {
   const [isClient, setIsClient] = useState(false);
-  useEffect(()=>{
-    setIsClient(true)
-  },[])
-  if(!isClient){
-    return null
+  const groupedItems = useCartStore((state) => state.getGroupedItems());
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  if (!isClient) {
+    return null;
   }
   return (
     <Link
@@ -19,7 +21,10 @@ const CartIcon = () => {
       <ShoppingBag className="text-darkBlue w-4 h-4 md:w-6 md:h-6" />
       <div className="flex flex-col">
         <p className="text-xs">
-          <span className="font-semibold">0</span> items{" "}
+          <span className="font-semibold">
+            {groupedItems?.length ? groupedItems?.length : 0}
+          </span>{" "}
+          items{" "}
         </p>
         <p className="font-semibold">Cart</p>
       </div>
