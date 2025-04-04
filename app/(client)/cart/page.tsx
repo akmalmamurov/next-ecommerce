@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import useCartStore from "@/context/store";
 import { urlFor } from "@/sanity/lib/image";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,9 +27,9 @@ const CartPage = () => {
   } = useCartStore();
   const [isClient, setIsClient] = useState(false);
   const { isSignedIn } = useAuth();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const groupedItems = useCartStore((state) => state.getGroupedItems());
-  const { user } = useUser();
+  // const { user } = useUser();
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -160,7 +160,7 @@ const CartPage = () => {
                 </div>
               </div>
               <div>
-                
+
               </div>
             </>
           ) : (
